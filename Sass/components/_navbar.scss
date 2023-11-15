@@ -1,0 +1,43 @@
+@use '../abstracts/' as *;
+
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 0, 0, 0.167);
+    padding: 20px;
+    max-width: 1400px;
+
+    h2 span{
+        color: $primary;
+    }
+
+    .menus{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+        
+        ul{
+            display: flex;
+            margin-right: 10px;
+            li{
+                margin: 0 10px;
+
+                &#dropdown:hover {
+                    cursor: pointer;
+                }
+
+                a{
+                    color: $text;
+                }
+            }
+        }
+
+        #profile img{
+            width: 40px;
+            margin-left: 20px;
+            border-radius: 50%;
+            border: 3px solid $primary;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+@use 'color' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+$text: 16px;
+$textm: 24px;
+$textl: 40px;
+
+@mixin secTitle($black: true){
+    
+}
