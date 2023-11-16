@@ -1,40 +1,90 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 #navbar {
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(255, 0, 0, 0.167);
-  padding: 20px;
-  max-width: 1400px;
-}
-#navbar h2 span {
-  color: #219758;
-}
-#navbar .menus {
+  width: 100%;
+  padding: 20px 10px;
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: bold;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#navbar .menus {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#navbar .menus h2 #back {
+  display: none;
+}
+#navbar .menus h2 span {
+  color: #219758;
 }
 #navbar .menus ul {
   display: flex;
-  margin-right: 10px;
 }
 #navbar .menus ul li {
   margin: 0 10px;
 }
-#navbar .menus ul li#dropdown:hover {
-  cursor: pointer;
-}
 #navbar .menus ul li a {
-  color: 16px;
+  color: black;
 }
-#navbar .menus #profile img {
+#navbar .humb {
+  display: none;
+}
+#navbar .other {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+}
+#navbar .other #profile img {
   width: 40px;
   margin-left: 20px;
-  border-radius: 50%;
-  border: 3px solid #219758;
 }
 
+@media (max-width: 768px) {
+  #navbar .menuopen {
+    padding: 20px;
+    transform: translateX(-100%);
+  }
+  #navbar .menus {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    background-color: white;
+    flex-direction: column;
+    transition: all 0.3s;
+  }
+  #navbar .menus h2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  #navbar .menus h2 #back {
+    rotate: 90deg;
+    margin-right: 10px;
+    display: block;
+  }
+  #navbar .menus h2 #back:hover {
+    cursor: pointer;
+  }
+  #navbar .menus ul {
+    flex-direction: column;
+  }
+  #navbar .menus ul li {
+    margin: 5px 0;
+  }
+  #navbar .humb {
+    width: 40px;
+    display: block;
+  }
+  #navbar .humb:hover {
+    cursor: pointer;
+  }
+}
 * {
   margin: 0;
   padding: 0;

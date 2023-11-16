@@ -10,6 +10,7 @@
     @else if($size == md){$device: 1060px;}
     @else if($size == lg){$device: 1200px;}
     @else if($size == xl){$device: 1700px;}
+    @else {$device: $size;}
 
     @media (max-width: $device){
         @content;

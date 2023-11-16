@@ -1,43 +1,92 @@
 @use '../abstracts/' as *;
 
-#navbar {
+#navbar{
+    width: 100%;
+    padding: 20px 10px;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    background-color: rgba(255, 0, 0, 0.167);
-    padding: 20px;
-    max-width: 1400px;
-
-    h2 span{
-        color: $primary;
-    }
-
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
     .menus{
+        width: 100%;
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        font-weight: bold;
-        
+        h2{
+            #back{
+                display: none;
+            }
+            span{
+                color: $primary;
+            }
+        }
         ul{
             display: flex;
-            margin-right: 10px;
             li{
                 margin: 0 10px;
-
-                &#dropdown:hover {
-                    cursor: pointer;
-                }
-
                 a{
-                    color: $text;
+                    color: black;
                 }
             }
         }
-
+    }
+    .humb{
+        display: none;
+    }
+    .other{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 20px;
         #profile img{
             width: 40px;
             margin-left: 20px;
-            border-radius: 50%;
-            border: 3px solid $primary;
+        }
+    }
+}
+
+@include media(sm){
+    #navbar{
+        .menuopen{
+            padding: 20px;
+            transform: translateX(-100%);
+        }
+        .menus{
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            background-color: white;
+            flex-direction: column;
+            transition: all .3s;
+            h2{
+                display: flex;
+                align-items: center;
+                margin-bottom: 20px;
+                #back{
+                    rotate: 90deg;
+                    margin-right: 10px;
+                    display: block;
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+            ul{
+                flex-direction: column;
+                li{
+                    margin: 5px 0;
+                }
+            }
+        }
+        .humb{
+            width: 40px;
+            display: block;
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
 }
