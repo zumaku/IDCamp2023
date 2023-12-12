@@ -1,4 +1,67 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+#hero {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../assets/hero.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+#hero h1 {
+  color: white;
+  font-size: 40px;
+  max-width: 525px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#hero h1 span {
+  color: #2DCD78;
+}
+#hero #search {
+  width: 60%;
+  max-width: 767px;
+  background-color: white;
+  padding: 18px 26px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+#hero #search input {
+  width: 95%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  #hero h1 {
+    color: white;
+    font-size: 24px;
+  }
+  #hero h1 span {
+    color: #2DCD78;
+  }
+  #hero #search {
+    width: 70%;
+    padding: 15px 20px;
+  }
+  #hero #search input {
+    width: 95%;
+    height: 100%;
+    border: 0;
+    outline: 0;
+    font-size: 16px;
+  }
+}
 #navbar {
   width: 100%;
   padding: 20px 10px;
@@ -9,6 +72,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  background-color: white;
 }
 #navbar .menus {
   width: 100%;
