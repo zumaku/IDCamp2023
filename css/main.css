@@ -73,7 +73,7 @@
   top: 0;
   left: 0;
   background-color: white;
-  z-index: 9999;
+  z-index: 10;
 }
 #navbar .menus {
   width: 100%;
@@ -348,6 +348,59 @@ footer .content .right .sub-right ul li a {
     margin-bottom: 20px;
   }
 }
+.biodata {
+  width: 100%;
+  max-width: 300px;
+  height: 100vh;
+  background-color: #FDF7FA;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  box-shadow: -20px 0 10px rgba(0, 0, 0, 0.256);
+  transition: 0.5s ease-out;
+}
+.biodata.muncul {
+  right: -100%;
+}
+.biodata h1 {
+  margin-bottom: 20px;
+}
+.biodata h1 span {
+  color: #219758;
+}
+.biodata p {
+  margin-bottom: 20px;
+}
+.biodata p span {
+  font-weight: bold;
+}
+
+.tombol {
+  font-weight: bold;
+  color: white;
+  background-color: #219758;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 12px 10px;
+  text-align: center;
+  border-radius: 20px 0 0 20px;
+  position: fixed;
+  z-index: 25;
+  bottom: 100px;
+  right: 0;
+}
+.tombol:hover {
+  cursor: pointer;
+}
+
 * {
   margin: 0;
   padding: 0;
