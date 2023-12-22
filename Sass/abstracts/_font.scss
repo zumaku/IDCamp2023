@@ -6,6 +6,18 @@ $text: 16px;
 $textm: 24px;
 $textl: 40px;
 
-@mixin secTitle($black: true){
-    
+@mixin secTitle(){
+    h1{
+        font-size: $textl;
+        margin-bottom: 20px;
+        span{
+            color: $primary;
+        }
+    }
+
+    p{
+        text-align: center;
+        max-width: 625px;
+        margin-bottom: 40px;
+    }
 }

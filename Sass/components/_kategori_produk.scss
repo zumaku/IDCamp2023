@@ -6,20 +6,7 @@
     margin: auto;
     padding: 30px 10px 20px 10px;
     @include flex-container(column, center, center);
-
-    h1{
-        font-size: $textl;
-        margin-bottom: 20px;
-        span{
-            color: $primary;
-        }
-    }
-
-    p{
-        text-align: center;
-        max-width: 625px;
-        margin-bottom: 40px;
-    }
+    @include secTitle();
 
     .splide{
         width: 100%;
