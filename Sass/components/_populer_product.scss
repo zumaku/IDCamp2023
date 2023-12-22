@@ -20,7 +20,7 @@
         .cards_product{
             width: 100%;
             margin-bottom: 20px;
-            @include flex-container(row, space-between, flex-start);
+            @include flex-container(row, space-between, flex-start, wrap);
             
             .card_product{
                 width: 23%;
@@ -33,6 +33,7 @@
                 font-weight: bold;
                 padding: 20px;
                 border-radius: 15px;
+                margin-bottom: 20px;
                 @include flex-container(column, flex-end, flex-start);
 
                 p{
@@ -49,5 +50,17 @@
             border-radius: 8px;
             @include flex-item(0,1, end);
         }
+    }
+}
+
+@include media(md){
+    #populer_produk .product_section .cards_product .card_product{
+        width: 48%;
+    }
+}
+
+@include media(sm){
+    #populer_produk .product_section .cards_product .card_product{
+        width: 100%;
     }
 }
