@@ -1,16 +1,24 @@
-// Deklarasi semau constanta yang dibutuhkan
+// Deklarasi konstanta yang dibutuhkan
 const inputBookTitle = document.getElementById("inputBookTitle");
 const inputBookAuthor = document.getElementById("inputBookAuthor");
 const inputBookYear = document.getElementById("inputBookYear");
 const inputBookIsComplete = document.getElementById("inputBookIsComplete");
 const inputBookForm = document.getElementById("inputBook");
-const incompleteBookshelfList = document.getElementById(
-    "incompleteBookshelfList"
-);
+const incompleteBookshelfList = document.getElementById("incompleteBookshelfList");
 const completeBookshelfList = document.getElementById("completeBookshelfList");
 
 // Event saat form disubmit
-inputBookForm.addEventListener("submit", function (event) {
+inputBookForm.addEventListener("submit", handleFormSubmit);
+
+// Event untuk pencarian buku
+const searchBookForm = document.getElementById("searchBook");
+searchBookForm.addEventListener("submit", handleSearchSubmit);
+
+// Memuat buku saat halaman dimuat
+loadBooks();
+
+// Fungsi untuk menangani submit form
+function handleFormSubmit(event) {
     event.preventDefault();
 
     const title = inputBookTitle.value;
@@ -26,7 +34,7 @@ inputBookForm.addEventListener("submit", function (event) {
     } else {
         alert("Please fill in all the fields!");
     }
-});
+}
 
 // Fungsi membersihkan inputan saat form telah disubmit
 function clearInputForm() {
@@ -57,7 +65,7 @@ function addBookToShelf(book, isComplete) {
     }
 }
 
-// FUngsi membuat elemen buku
+// Fungsi membuat elemen buku
 function createBookElement(book) {
     const bookElement = document.createElement("article");
     bookElement.classList.add("book_item");
@@ -68,9 +76,9 @@ function createBookElement(book) {
         <p>Year: ${book.year}</p>
         <div class="action">
             <button class="green" onclick="${book.isComplete ? 'moveToIncomplete' : 'moveToCompleted'}(${book.id})">
-                ${book.isComplete ? 'Move to Uncompleted' : 'Move to Completed'}
+                ${book.isComplete ? 'Pindahkan ke Belum Dibaca' : 'Pindahkan ke Sudah Dibaca'}
             </button>
-            <button class="red" onclick="deleteBook(${book.id})">Delete Book</button>
+            <button class="red" onclick="deleteBook(${book.id})">Hapus Buku</button>
         </div>
     `;
     return bookElement;
@@ -94,12 +102,19 @@ function updateDataToStorage() {
     localStorage.setItem("books", JSON.stringify(books));
 }
 
-// Fungsi menghapus buku/data di penyimpanan
-function deleteBookFromStorage(id) {
-    const books = getDataFromStorage();
-    const updatedBooks = books.filter((book) => book.id != id);
-    localStorage.setItem("books", JSON.stringify(updatedBooks));
+// Fungsi menghapus buku
+function deleteBook(id) {
+    const bookElement = document.getElementById(id);
+    const bookData = getBookById(id);
+
+    if (bookElement && bookData) {
+        bookElement.remove();
+        deleteBookFromStorage(id);
+        refreshBookView(); // Perbarui tampilan setelah menghapus buku
+        console.log(`Book deleted: ${JSON.stringify(bookData)}`);
+    }
 }
+
 
 // Fungsi memasukkan data ke elemen
 function bookElementToData(bookElement) {
@@ -119,31 +134,6 @@ function bookElementToData(bookElement) {
 function getBookById(id) {
     const books = getDataFromStorage();
     return books.find((book) => book.id == id);
-}
-
-// Fungsi menghapus buku
-function deleteBook(id) {
-    const bookElement = document.getElementById(id);
-    const bookData = getBookById(id);
-
-    if (bookElement && bookData) {
-        bookElement.remove();
-        deleteBookFromStorage(id);
-        console.log(`Book deleted: ${JSON.stringify(bookData)}`);
-    }
-}
-
-// Fungsi meload data dari penyimpanan ke tampilan
-function loadBooks() {
-    const books = getDataFromStorage();
-    books.forEach((book) => {
-        const bookElement = createBookElement(book);
-        if (book.isComplete) {
-            completeBookshelfList.appendChild(bookElement);
-        } else {
-            incompleteBookshelfList.appendChild(bookElement);
-        }
-    });
 }
 
 // Fungsi untuk mengubah status buku
@@ -175,22 +165,33 @@ function refreshBookView() {
     loadBooks();
 }
 
-// Fungsi mengubah status telah dibaca
+// Fungsi untuk mengubah status telah dibaca
 function moveToCompleted(id) {
     updateBookStatus(id, true);
     refreshBookView();
 }
 
-// Fungsi mengubah status belum dibaca
+// Fungsi untuk mengubah status belum dibaca
 function moveToIncomplete(id) {
     updateBookStatus(id, false);
     refreshBookView();
 }
 
-// Pencarian Buku
-const searchBookForm = document.getElementById("searchBook");
+// Fungsi meload data dari penyimpanan ke tampilan
+function loadBooks() {
+    const books = getDataFromStorage();
+    books.forEach((book) => {
+        const bookElement = createBookElement(book);
+        if (book.isComplete) {
+            completeBookshelfList.appendChild(bookElement);
+        } else {
+            incompleteBookshelfList.appendChild(bookElement);
+        }
+    });
+}
 
-searchBookForm.addEventListener("submit", function (event) {
+// Fungsi untuk menangani submit form pencarian buku
+function handleSearchSubmit(event) {
     event.preventDefault();
 
     const searchTitle = document
@@ -220,6 +221,4 @@ searchBookForm.addEventListener("submit", function (event) {
             }
         }
     });
-});
-
-loadBooks();
+}
