@@ -21,23 +21,34 @@ loadBooks();
 function handleFormSubmit(event) {
     event.preventDefault();
 
+    // Mendapatkan nilai dari input form
     const title = inputBookTitle.value;
     const author = inputBookAuthor.value;
     const year = inputBookYear.value;
     const isComplete = inputBookIsComplete.checked;
 
+    // Memastikan input form terisi
     if (title && author && year) {
+        // Membuat objek buku baru
         const book = createBook(+new Date(), title, author, year, isComplete);
+        
+        // Menambahkan buku ke rak yang sesuai
         addBookToShelf(book, isComplete);
+
+        // Mengupdate data di penyimpanan lokal
         updateDataToStorage();
+
+        // Membersihkan input form
         clearInputForm();
     } else {
+        // Menampilkan peringatan jika input belum lengkap
         alert("Please fill in all the fields!");
     }
 }
 
 // Fungsi membersihkan inputan saat form telah disubmit
 function clearInputForm() {
+    // Membersihkan nilai input form
     inputBookTitle.value = "";
     inputBookAuthor.value = "";
     inputBookYear.value = "";
@@ -46,6 +57,7 @@ function clearInputForm() {
 
 // Fungsi membuat buku
 function createBook(id, title, author, year, isComplete) {
+    // Membuat objek buku dengan properti yang diberikan
     return {
         id,
         title,
@@ -57,7 +69,10 @@ function createBook(id, title, author, year, isComplete) {
 
 // Fungsi menambahkan buku ke rak
 function addBookToShelf(book, isComplete) {
+    // Membuat elemen buku dari objek buku
     const bookElement = createBookElement(book);
+
+    // Menambahkan elemen buku ke rak yang sesuai
     if (isComplete) {
         completeBookshelfList.appendChild(bookElement);
     } else {
@@ -67,6 +82,7 @@ function addBookToShelf(book, isComplete) {
 
 // Fungsi membuat elemen buku
 function createBookElement(book) {
+    // Membuat elemen HTML untuk buku
     const bookElement = document.createElement("article");
     bookElement.classList.add("book_item");
     bookElement.setAttribute("id", book.id);
@@ -76,9 +92,9 @@ function createBookElement(book) {
         <p>Year: ${book.year}</p>
         <div class="action">
             <button class="green" onclick="${book.isComplete ? 'moveToIncomplete' : 'moveToCompleted'}(${book.id})">
-                ${book.isComplete ? 'Pindahkan ke Belum Dibaca' : 'Pindahkan ke Sudah Dibaca'}
+                ${book.isComplete ? 'Move to Uncompleted' : 'Move to Completed'}
             </button>
-            <button class="red" onclick="deleteBook(${book.id})">Hapus Buku</button>
+            <button class="red" onclick="deleteBook(${book.id})">Delete Book</button>
         </div>
     `;
     return bookElement;
@@ -86,31 +102,48 @@ function createBookElement(book) {
 
 // Fungsi mengambil data dari penyimpanan
 function getDataFromStorage() {
+    // Mendapatkan data buku dari penyimpanan lokal
     const storageData = localStorage.getItem("books");
     return storageData ? JSON.parse(storageData) : [];
 }
 
 // Fungsi mengupdate data di penyimpanan
 function updateDataToStorage() {
+    // Mendapatkan data buku dari rak yang belum selesai
     const incompleteBooks = Array.from(incompleteBookshelfList.children).map(
         bookElementToData
     );
+
+    // Mendapatkan data buku dari rak yang sudah selesai
     const completeBooks = Array.from(completeBookshelfList.children).map(
         bookElementToData
     );
+
+    // Menggabungkan kedua data buku
     const books = [...incompleteBooks, ...completeBooks];
+
+    // Menyimpan data buku ke penyimpanan lokal
     localStorage.setItem("books", JSON.stringify(books));
 }
 
-// Fungsi menghapus buku
+// Fungsi menghapus buku dari rak dan penyimpanan
 function deleteBook(id) {
+    // Mendapatkan elemen buku dan data buku berdasarkan ID
     const bookElement = document.getElementById(id);
     const bookData = getBookById(id);
 
+    // Memastikan elemen buku dan data buku ada sebelum dihapus
     if (bookElement && bookData) {
+        // Menghapus elemen buku dari tampilan
         bookElement.remove();
+        
+        // Menghapus buku dari penyimpanan (localStorage)
         deleteBookFromStorage(id);
-        refreshBookView(); // Perbarui tampilan setelah menghapus buku
+
+        // Memperbarui tampilan rak buku setelah menghapus buku
+        refreshBookView();
+
+        // Logging untuk memberi informasi di konsol
         console.log(`Book deleted: ${JSON.stringify(bookData)}`);
     }
 }
@@ -118,6 +151,7 @@ function deleteBook(id) {
 
 // Fungsi memasukkan data ke elemen
 function bookElementToData(bookElement) {
+    // Mendapatkan data buku dari elemen buku
     const id = bookElement.id;
     const title = bookElement.querySelector("h3").innerText;
     const author = bookElement
@@ -132,16 +166,24 @@ function bookElementToData(bookElement) {
 
 // Fungsi mengambil id buku
 function getBookById(id) {
+    // Mendapatkan data buku dari penyimpanan lokal
     const books = getDataFromStorage();
+    
+    // Mencari buku dengan id tertentu
     return books.find((book) => book.id == id);
 }
 
 // Fungsi untuk mengubah status buku
 function updateBookStatus(id, isComplete) {
+    // Mendapatkan elemen buku berdasarkan id
     const bookElement = document.getElementById(id);
+    
+    // Mendapatkan data buku dari penyimpanan lokal
     const bookData = getBookById(id);
 
+    // Memastikan elemen buku dan data buku tersedia
     if (bookElement && bookData) {
+        // Mengupdate status buku
         bookData.isComplete = isComplete;
 
         // Hapus dan tambahkan kembali ke rak yang sesuai
@@ -151,6 +193,7 @@ function updateBookStatus(id, isComplete) {
             incompleteBookshelfList.appendChild(bookElement);
         }
 
+        // Mengupdate data di penyimpanan lokal
         updateDataToStorage();
         console.log(`Book status updated: ${JSON.stringify(bookData)}`);
     }
@@ -158,59 +201,55 @@ function updateBookStatus(id, isComplete) {
 
 // Fungsi untuk memperbarui tampilan elemen buku setelah perubahan status
 function refreshBookView() {
+    // Menghapus semua elemen buku dari rak
     incompleteBookshelfList.innerHTML = "";
     completeBookshelfList.innerHTML = "";
     
-    // Memanggil fungsi loadBooks sekali pada awal
+    // Memuat ulang buku ke rak
     loadBooks();
 }
 
-// Fungsi untuk mengubah status telah dibaca
+// Fungsi untuk memindahkan buku ke rak yang sudah dibaca
 function moveToCompleted(id) {
     updateBookStatus(id, true);
+    
+    // Memperbarui tampilan setelah perubahan status
     refreshBookView();
 }
 
-// Fungsi untuk mengubah status belum dibaca
+// Fungsi untuk memindahkan buku ke rak yang belum dibaca
 function moveToIncomplete(id) {
     updateBookStatus(id, false);
+    
+    // Memperbarui tampilan setelah perubahan status
     refreshBookView();
-}
-
-// Fungsi meload data dari penyimpanan ke tampilan
-function loadBooks() {
-    const books = getDataFromStorage();
-    books.forEach((book) => {
-        const bookElement = createBookElement(book);
-        if (book.isComplete) {
-            completeBookshelfList.appendChild(bookElement);
-        } else {
-            incompleteBookshelfList.appendChild(bookElement);
-        }
-    });
 }
 
 // Fungsi untuk menangani submit form pencarian buku
 function handleSearchSubmit(event) {
     event.preventDefault();
 
+    // Mendapatkan nilai dari input form pencarian
     const searchTitle = document
         .getElementById("searchBookTitle")
         .value.toLowerCase();
 
+    // Mendapatkan elemen rak buku yang belum selesai dan sudah selesai
     const incompleteBookshelfList = document.getElementById(
         "incompleteBookshelfList"
     );
     const completeBookshelfList = document.getElementById(
         "completeBookshelfList"
     );
+
+    // Menghapus semua elemen buku dari rak
     incompleteBookshelfList.innerHTML = "";
     completeBookshelfList.innerHTML = "";
 
-    // Mengambil data dari penyimpanan
+    // Mendapatkan data buku dari penyimpanan lokal
     const books = getDataFromStorage();
 
-    // Memfilter buku
+    // Memfilter buku berdasarkan judul
     books.forEach((book) => {
         if (book.title.toLowerCase().includes(searchTitle)) {
             const bookElement = createBookElement(book);
@@ -219,6 +258,22 @@ function handleSearchSubmit(event) {
             } else {
                 incompleteBookshelfList.appendChild(bookElement);
             }
+        }
+    });
+}
+
+// Fungsi untuk memuat buku saat halaman dimuat
+function loadBooks() {
+    // Mendapatkan data buku dari penyimpanan lokal
+    const books = getDataFromStorage();
+
+    // Menambahkan setiap buku ke rak yang sesuai
+    books.forEach((book) => {
+        const bookElement = createBookElement(book);
+        if (book.isComplete) {
+            completeBookshelfList.appendChild(bookElement);
+        } else {
+            incompleteBookshelfList.appendChild(bookElement);
         }
     });
 }
