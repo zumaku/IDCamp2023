@@ -149,6 +149,15 @@ function deleteBook(id) {
 }
 
 
+// Fungsi menghapus buku/data di penyimpanan
+function deleteBookFromStorage(id) {
+    const books = getDataFromStorage();
+    const updatedBooks = books.filter((book) => book.id != id);
+    localStorage.setItem("books", JSON.stringify(updatedBooks));
+}
+
+
+
 // Fungsi memasukkan data ke elemen
 function bookElementToData(bookElement) {
     // Mendapatkan data buku dari elemen buku
