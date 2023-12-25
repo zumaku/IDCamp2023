@@ -1,16 +1,15 @@
 export default function Card(props) {
     const handleArsipkan = () => {
         if (!props.archived) {
-            props.arsipkanCatatan(props.id);
+            props.arsipkanCatatan(props.id)
         } else {
-            props.unarsipkanCatatan(props.id);
+            props.unarsipkanCatatan(props.id)
         }
-    };
+    }
 
     const handleHapus = () => {
-        // Panggil properti hapusCatatan dan berikan ID catatan sebagai argumen
-        props.hapusCatatan(props.id);
-    };
+        props.hapusCatatan(props.id)
+    }
 
     return (
         <div
@@ -35,5 +34,5 @@ export default function Card(props) {
                 </button>
             </div>
         </div>
-    );
+    )
 }

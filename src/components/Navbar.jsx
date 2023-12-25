@@ -1,8 +1,7 @@
 export default function Navbar(props) {
-
     const handleSearch = (e) => {
-        props.setFilter(e.target.value);
-    };
+        props.setFilter(e.target.value)
+    }
 
     return (
         <nav className="w-full h-fit bg-green-700">
@@ -18,5 +17,5 @@ export default function Navbar(props) {
                 />
             </div>
         </nav>
-    );
+    )
 }

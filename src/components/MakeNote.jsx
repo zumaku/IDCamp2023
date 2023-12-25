@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useState } from "react"
 
 export default function MakeNote(props) {
-    const [judul, setJudul] = useState("");
-    const [isiCatatan, setIsiCatatan] = useState("");
+    const [judul, setJudul] = useState("")
+    const [isiCatatan, setIsiCatatan] = useState("")
 
     const handleJudulChange = (e) => {
         if (e.target.value.length <= 50) {
-            setJudul(e.target.value);
+            setJudul(e.target.value)
         }
-    };
+    }
 
     const tambahCatatan = (judul, isi) => {
         const newCatatan = {
@@ -17,17 +17,17 @@ export default function MakeNote(props) {
             title: judul,
             body: isi,
             archived: false,
-        };
+        }
 
-        props.setCatatan((prevCatatan) => [...prevCatatan, newCatatan]);
-    };
+        props.setCatatan((prevCatatan) => [...prevCatatan, newCatatan])
+    }
 
     const handleSubmit = () => {
-        tambahCatatan(judul, isiCatatan);
+        tambahCatatan(judul, isiCatatan)
 
-        setJudul("");
-        setIsiCatatan("");
-    };
+        setJudul("")
+        setIsiCatatan("")
+    }
 
     return (
         <div className="w-full max-w-[800px] m-auto flex flex-col pt-5">
@@ -48,7 +48,7 @@ export default function MakeNote(props) {
                 placeholder="Isi Catatan"
                 value={isiCatatan}
                 onChange={(e) => {
-                    setIsiCatatan(e.target.value);
+                    setIsiCatatan(e.target.value)
                 }}
             ></textarea>
             <button
@@ -58,5 +58,5 @@ export default function MakeNote(props) {
                 Buat Catatan
             </button>
         </div>
-    );
+    )
 }
