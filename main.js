@@ -97,11 +97,66 @@ window.deleteBook = function (id) {
     }
 };
 
+// Fungsi untuk membersihkan input form pencarian
+function clearSearchForm() {
+    const searchBookTitleInput = document.getElementById('searchBookTitle');
+    searchBookTitleInput.value = '';
+}
+
 // Event listener untuk form input buku
-bookSubmitButton.addEventListener("click", function (event) {
+bookSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     addBook();
+    clearSearchForm(); // Membersihkan form pencarian setelah menambahkan buku
 });
+
+
+
+// Fungsi untuk melakukan pencarian berdasarkan judul buku
+function searchBooks(title) {
+    let books = JSON.parse(localStorage.getItem('books')) || [];
+    const searchResult = books.filter((book) =>
+        book.title.toLowerCase().includes(title.toLowerCase())
+    );
+    return searchResult;
+}
+
+// Event listener untuk form pencarian buku
+const searchBookForm = document.getElementById('searchBook');
+searchBookForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    const searchBookTitleInput = document.getElementById('searchBookTitle');
+    const searchTerm = searchBookTitleInput.value;
+
+    if (searchTerm.trim() !== '') {
+        const searchResult = searchBooks(searchTerm);
+        displaySearchResult(searchResult);
+    } else {
+        // Jika input pencarian kosong, tampilkan semua buku
+        displayBooks();
+    }
+});
+
+// Fungsi untuk menampilkan hasil pencarian
+function displaySearchResult(searchResult) {
+    incompleteBookshelfList.innerHTML = '';
+    completeBookshelfList.innerHTML = '';
+
+    searchResult.forEach((book) => {
+        const bookElement = createBookElement(book);
+
+        if (book.isComplete) {
+            completeBookshelfList.appendChild(bookElement);
+        } else {
+            incompleteBookshelfList.appendChild(bookElement);
+        }
+    });
+}
+
+
+
+
+
 
 // Menampilkan buku saat halaman dimuat
 displayBooks();
