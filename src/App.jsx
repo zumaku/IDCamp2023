@@ -16,8 +16,8 @@ export default function App() {
     <>
       <Navbar />
       <MakeNote setCatatan={setCatatan} />
-      <CatatanAktif catatan={catatan} />
-      {/* <ArsipCatatan catatan={catatan} /> */}
+      <CatatanAktif catatan={catatan} setCatatan={setCatatan} />
+      <ArsipCatatan catatan={catatan} setCatatan={setCatatan} />
     </>
   );
 }
