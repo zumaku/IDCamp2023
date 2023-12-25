@@ -1,10 +1,15 @@
 export default function Card(props) {
     const handleArsipkan = () => {
-        if(!props.archived){
+        if (!props.archived) {
             props.arsipkanCatatan(props.id);
-        } else{
+        } else {
             props.unarsipkanCatatan(props.id);
         }
+    };
+
+    const handleHapus = () => {
+        // Panggil properti hapusCatatan dan berikan ID catatan sebagai argumen
+        props.hapusCatatan(props.id);
     };
 
     return (
@@ -16,14 +21,17 @@ export default function Card(props) {
             <p className="text-neutral-600 mb-2">{props.createdAt}</p>
             <p className="mb-3">{props.body}</p>
             <div className="flex justify-between">
-                <button className="bg-red-600 font-bold px-3 py-2 rounded-md">
+                <button
+                    className="bg-red-600 font-bold px-3 py-2 rounded-md"
+                    onClick={handleHapus}
+                >
                     Hapus
                 </button>
                 <button
                     className="bg-green-600 font-bold px-3 py-2 rounded-md"
                     onClick={handleArsipkan}
                 >
-                    {props.archived ? "Unarsipkan" :"Arsipkan"}
+                    {props.archived ? "Unarsipkan" : "Arsipkan"}
                 </button>
             </div>
         </div>
