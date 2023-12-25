@@ -2,9 +2,10 @@
 import Card from "./Card";
 
 export default function CatatanAktif(props) {
+    const { catatan, filter } = props;
 
-    const catatanTidakDiarsipkan = props.catatan.filter(
-        (data) => !data.archived
+    const catatanTidakDiarsipkan = catatan.filter(
+        (data) => !data.archived && data.title.toLowerCase().includes(filter.toLowerCase())
     );
 
     const arsipkanCatatan = (id) => {
@@ -16,10 +17,7 @@ export default function CatatanAktif(props) {
     };
 
     const hapusCatatan = (id) => {
-        // Filter catatan berdasarkan ID untuk menghapusnya
         const catatanTanpaHapus = props.catatan.filter((catatan) => catatan.id !== id);
-
-        // Panggil properti setCatatan untuk memperbarui state
         props.setCatatan(catatanTanpaHapus);
     };
 

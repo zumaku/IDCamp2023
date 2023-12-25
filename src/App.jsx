@@ -7,17 +7,14 @@ import ArsipCatatan from "./components/ArsipCatatan";
 
 export default function App() {
   const [catatan, setCatatan] = useState(getInitialData());
-
-  // useEffect(() => {
-  //   console.log(catatan)
-  // }, [catatan])
+  const [filter, setFilter] = useState("");
 
   return (
     <>
-      <Navbar />
+      <Navbar setFilter={setFilter} />
       <MakeNote setCatatan={setCatatan} />
-      <CatatanAktif catatan={catatan} setCatatan={setCatatan} />
-      <ArsipCatatan catatan={catatan} setCatatan={setCatatan} />
+      <CatatanAktif catatan={catatan} setCatatan={setCatatan} filter={filter} />
+      <ArsipCatatan catatan={catatan} setCatatan={setCatatan} filter={filter} />
     </>
   );
 }

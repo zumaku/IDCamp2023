@@ -1,22 +1,21 @@
 import Card from "./Card";
 export default function ArsipCatatan(props) {
-    const catatanDiarsipkan = props.catatan.filter((data) => data.archived);
+    const { catatan, filter } = props;
+
+    const catatanDiarsipkan = catatan.filter(
+        (data) => data.archived && data.title.toLowerCase().includes(filter.toLowerCase())
+    );
 
     const unarsipkanCatatan = (id) => {
-        // Ubah nilai archived menjadi false untuk catatan dengan ID tertentu
-        const catatanTerunarsipkan = props.catatan.map((catatan) =>
+        const catatanTerarsip = props.catatan.map((catatan) =>
             catatan.id === id ? { ...catatan, archived: false } : catatan
         );
 
-        // Panggil properti setCatatan untuk memperbarui state
-        props.setCatatan(catatanTerunarsipkan);
+        props.setCatatan(catatanTerarsip);
     };
 
     const hapusCatatan = (id) => {
-        // Filter catatan berdasarkan ID untuk menghapusnya
         const catatanTanpaHapus = props.catatan.filter((catatan) => catatan.id !== id);
-
-        // Panggil properti setCatatan untuk memperbarui state
         props.setCatatan(catatanTanpaHapus);
     };
 
